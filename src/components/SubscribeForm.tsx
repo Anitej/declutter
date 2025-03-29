@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { toast } from "sonner";
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseAvailable } from '@/lib/supabase';
 
 const SubscribeForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -30,6 +29,12 @@ const SubscribeForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
+      // Check if Supabase is available
+      if (!isSupabaseAvailable()) {
+        toast.error("Database connection is not available");
+        return;
+      }
+
       // Insert the email into the subscribers table
       const { error } = await supabase
         .from('subscribers')
@@ -107,3 +112,4 @@ const SubscribeForm: React.FC = () => {
 };
 
 export default SubscribeForm;
+
