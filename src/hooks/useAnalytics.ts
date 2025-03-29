@@ -29,9 +29,23 @@ const useAnalytics = () => {
         window.gtag('event', eventName, params);
       }
       
-      // Facebook Pixel event
+      // Facebook Pixel event - handle special events differently 
       if (window.fbq) {
-        window.fbq('track', eventName, params);
+        // Special handling for subscription events
+        if (eventName === 'SubscribeButtonClick') {
+          window.fbq('trackCustom', 'SubscribeButtonClick');
+        } 
+        else if (eventName === 'subscribe') {
+          window.fbq('track', 'CompleteRegistration', {
+            content_name: 'newsletter_subscription',
+            ...params
+          });
+        } 
+        else {
+          // Default event tracking
+          window.fbq('trackCustom', eventName, params);
+        }
+        
       }
     } catch (error) {
       console.error('Analytics event tracking error:', error);
