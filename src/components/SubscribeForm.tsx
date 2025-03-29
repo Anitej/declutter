@@ -19,6 +19,9 @@ const SubscribeForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Track button click event with Facebook Pixel
+    trackEvent('SubscribeButtonClick');
+    
     // Validate email
     if (!email) {
       toast.error("Please enter your email address");
