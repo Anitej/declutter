@@ -9,6 +9,30 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+import { BrowserRouter, Routes, Route, useLocation, useNavigationType } from "react-router-dom";
+import { useEffect } from "react";
+import Index from "./pages/Index";
+import Auth from "./pages/Auth";
+import NotFound from "./pages/NotFound";
+import useAnalytics from "./hooks/useAnalytics";
+
+const queryClient = new QueryClient();
+
+// This component handles analytics tracking
+const AnalyticsTracker = () => {
+  const location = useLocation();
+  const navigationType = useNavigationType();
+  const { trackPageView } = useAnalytics();
+  
+  useEffect(() => {
+    // Only track page views on new navigation, not on page refresh
+    if (navigationType !== 'POP') {
+      trackPageView(location.pathname);
+    }
+  }, [location, navigationType, trackPageView]);
+  
+  return null;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -16,6 +40,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <AnalyticsTracker />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
