@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { toast } from "sonner";
 import { supabase, isSupabaseAvailable } from '@/lib/supabase';
+import useAnalytics from '@/hooks/useAnalytics';
+
 
 const SubscribeForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { trackEvent } = useAnalytics();
+
 
   // Email validation function
   const isValidEmail = (email: string) => {
@@ -50,6 +54,10 @@ const SubscribeForm: React.FC = () => {
         }
       } else {
         toast.success("Thank you for subscribing!");
+        
+        // Track successful subscription event
+        trackEvent('subscribe', { email_domain: email.split('@')[1] });
+        
         setEmail('');
       }
     } catch (err) {
