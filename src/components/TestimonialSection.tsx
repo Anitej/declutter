@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 
 const testimonials = [
   {
-    quote: "STYL has completely transformed my shopping experience. I actually wear everything I buy now!",
+    quote: "Decluttr has completely transformed my shopping experience. I actually wear everything I buy now!",
     author: "Emma S.",
     role: "Digital Marketing Manager"
   },
@@ -13,7 +13,7 @@ const testimonials = [
     role: "UX Designer"
   },
   {
-    quote: "I've discovered so many brands that match my aesthetic thanks to STYL's personalized approach.",
+    quote: "I've discovered so many brands that match my aesthetic thanks to Decluttr's personalized approach.",
     author: "Olivia H.",
     role: "Content Creator"
   }
